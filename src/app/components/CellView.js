@@ -6,20 +6,19 @@ export default class CellView extends React.Component {
 
       constructor(props){
             super(props)
-
-            console.log("cell : "+props.id+" has been constructed")
-            this.id=props.id
-            this.srcHidden=props.srcHidden
-            this.srcRevealed=props.srcRevealed
-            this.onRevealedCell=props.onRevealedCell
-
-            this.content=props.content
+                        this.id=this.props.id
+            this.srcHidden=this.props.srcHidden
+            this.srcRevealed=this.props.srcRevealed
+            this.onRevealedCell=this.props.onRevealedCell
+            this.content=this.props.content
 
 
+            this.onChange=this.onChange.bind(this)
             this.reveal=this.reveal.bind(this)
-            this.state = {
-                  imgContent : this.srcHidden
-            }     
+            this.hide=this.hide.bind(this)
+
+            this.props.isRevealed? this.state={imgContent : this.srcRevealed} : this.state={imgContent : this.srcHidden}
+           
       }
 
       static propTypes = {
@@ -36,17 +35,30 @@ export default class CellView extends React.Component {
             content : "Cell not define"
       }
       
+      onChange(){
+            this.onRevealedCell(this.id, this.content)
+            this.reveal();
+      }
+
       reveal(){
-            this.onRevealedCell(this.content)
-            this.setState({ imgContent : this.srcRevealed})
+            this.setState({imgContent : this.srcRevealed})
+      }
+
+      hide(){
+            this.setState({imgContent : this.srcHidden})
       }
 
       render(){  
-          
+
+           
+            console.log(this.isRevealed)
+
+            this.imgContent=this.state.imgContent
+            
             return(
-            <div className="cell" onClick={this.reveal}> 
+            <div className="cell" onClick={this.onChange}> 
                 <img className="cellRevealed" 
-                     src={this.state.imgContent}
+                     src={this.imgContent}
                      alt={"revealed cell" + this.content} />
             </div>)
       }

@@ -5,7 +5,7 @@ class GameManager {
     constructor(size){
          size==null || size===0 ? this.size=2 : this.size=size
     }
-    
+
     onNewRevealedCell(cellContent){
         console.log(cellContent)
     }
@@ -13,8 +13,6 @@ class GameManager {
     setSize(size){
         this.size=size
     }
-
-    
 
     getGridView(){
         return (

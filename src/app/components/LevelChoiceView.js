@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import levels from "../data/Levels"
 
 export default class LevelChoiceView extends React.Component {
 
@@ -24,9 +24,10 @@ export default class LevelChoiceView extends React.Component {
       render(){  
             return(
                 <div className="LevelChoice">
-                     <button id="hard" onClick={this.onLevelChosen}>hard</button>
-                     <button id="veryHard" onClick={this.onLevelChosen}>Very Hard</button>
-                     <button id="impossible" onClick={this.onLevelChosen}>Impossible</button>
+                      {
+                        levels.map( (level,i)=>{return(<button id={i} onClick={this.onLevelChosen}>{level.name} </button>)} 
+                                  )
+                        }
             </div>
            )
         }
