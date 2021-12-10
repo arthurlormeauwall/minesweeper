@@ -5,7 +5,7 @@ import CellView from "./CellView"
 const rowOfCells=(props)=>{
     const rowCount = props.rowCount
     const size = props.size
-    const tableData = props.grid
+    const tableData = props.cells
     const onRevealedCell = props.onRevealedCell
     
     const returnCallBack=(callBack)=>{
