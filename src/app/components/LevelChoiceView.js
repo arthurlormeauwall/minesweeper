@@ -10,14 +10,6 @@ export default class LevelChoiceView extends React.Component {
       }
 
 
-      static propTypes = {
-
-      }
-
-      static defaultProps={
-         
-      }
-
       onLevelChosen(event){
         this.levelChosen(event.currentTarget.id)
       }

@@ -13,14 +13,14 @@ import bomb       from "../../ressources/images/bomb.jpg"
 
 export const designRessource = {
   "cellHidden" : cellHidden,
-  "cell1" : cell1,
-  "cell2" :cell2,
-  "cell3" :cell3,
-  "cell4" :cell4,
-  "cell5" :cell5,
-  "cell6" :cell6,
-  "cell7" :cell7,
-  "cell8" :cell8,
+  'cell1' : cell1,
+  'cell2' :cell2,
+  'cell3' :cell3,
+  'cell4' :cell4,
+  'cell5' :cell5,
+  'cell6' :cell6,
+  'cell7' :cell7,
+  'cell8' :cell8,
   "cellFlag" : cellFlag,
   "cellEmpty" : cellEmpty,
   "bomb" : bomb

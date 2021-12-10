@@ -2,15 +2,11 @@ import React from 'react';
 import CellView from "./CellView"
 
 
-
-    
 const rowOfCells=(props)=>{
     const rowCount = props.rowCount
     const size = props.size
-    
-    const tableData = props.gridData
+    const tableData = props.grid
     const onRevealedCell = props.onRevealedCell
-    
     
     const returnCallBack=(callBack)=>{
       
@@ -27,17 +23,13 @@ const rowOfCells=(props)=>{
                    cells.push(
                  
                     <td key={cellCount+rowCount* size}>
-                        
-                        <CellView  id= {tableData[cellCount+rowCount* size].id}
-                            srcHidden= {tableData[cellCount+rowCount* size].imgHiddenCell}
-                            srcRevealed={tableData[cellCount+rowCount* size].imgRevealedCell}
-                            onRevealedCell={(onRevealedCell)}
-                            content={tableData[cellCount+rowCount* size].content}
-                            isRevealed={tableData[cellCount+rowCount* size].revealed}
+                       
+                        <CellView  cellData= {tableData[cellCount+rowCount* size]}
+                                   onRevealedCell={(onRevealedCell)}
+                          
                            /></td>
                     )
-            }
-            
+            }   
             return cells
             }
         ).map(item=>item)
@@ -48,7 +40,6 @@ const rowOfCells=(props)=>{
 const Grid =(props)=>{  
     
     const returnCallBack=(callBack)=>{
-
         return callBack()
     }
     
