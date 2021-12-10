@@ -45,6 +45,15 @@ class GridManager{
         }
     }
 
+    applyToAllLegalNeighborsAndReturn(index, callback){
+        let legalNeighborsIndexs=this.giveAllLegalNeighborIndex(index)
+        const response=[]
+        for (let i=0;i<legalNeighborsIndexs.length;i++){
+               response.push(callback(this.cells[legalNeighborsIndexs[i]]))
+        }
+        return response
+    }
+
     giveAllLegalNeighborIndex(index){
         const neighbors=this.neighbor(this.toXY(index)[0], this.toXY(index)[1]);
         

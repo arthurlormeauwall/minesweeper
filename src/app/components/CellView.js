@@ -27,10 +27,10 @@ export default class CellView extends React.Component {
 
             this.imgContent=this.props.cellData.content[this.props.cellData.state.toString()]
             return(
-            <div className="cell" onClick={this.onChange}> 
-                <img className="cellRevealed" 
+            <div className="cellDiv" onClick={this.onChange}> 
+                <img className="cell" 
                      src={this.imgContent}
-                     alt={"revealed cell" + this.type} />
+                     alt={"cell" + this.type} />
             </div>)
       }
 }

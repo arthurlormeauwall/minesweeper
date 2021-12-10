@@ -11,7 +11,7 @@ const cellData=(index, type)=>{
                 flaggedCell: designRessource['cellFlag'],
                 revealedCell : designRessource[type]
               },
-    state : 'revealedCell'
+    state : 'hiddenCell'
     })      
 }
 
