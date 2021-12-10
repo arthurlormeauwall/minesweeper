@@ -1,5 +1,5 @@
 import { designRessource } from '../data/designRessource';
-import GridManager from './grid';
+import GridManager from './gridManager';
 
 
 
