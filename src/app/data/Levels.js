@@ -2,7 +2,7 @@ const levels = [
     {
         name:"Hard",
         size:12,
-        difficulty : 13
+        difficulty :12
     },
     {
         name:"Very hard",

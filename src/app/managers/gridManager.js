@@ -1,7 +1,9 @@
+import getAllLinkedEmptyCells from "./getAllLinkedEmptyCells"
+
 class GridManager{
-    constructor(level){
+    constructor(level, cells){
         this.level=level
-        this.cells=[]
+        this.cells=cells
     }
 
     getData(){
@@ -11,26 +13,6 @@ class GridManager{
         })
     }
 
-    getLevel(){
-        return this.level
-    }
-
-    getSize(){
-        return this.level.size
-    }
-
-    getCells(){
-        return this.cells
-    }
-
-    setCells(cells){
-        this.cells=cells
-    }
-
-    getACell(index){
-        return this.cells[index]
-    }
-
     applyToAllCells(callback){
         for (let i=0;i<this.size*this.size;i++){
                 this.cells[i]=callback(this.cells[i])
@@ -38,7 +20,7 @@ class GridManager{
     }
 
     applyToAllLegalNeighbors(index, callback){
-        let legalNeighborsIndexs=this.giveAllLegalNeighborIndex(index)
+        let legalNeighborsIndexs=this.getAllLegalNeighborIndex(index)
         
         for (let i=0;i<legalNeighborsIndexs.length;i++){
                 this.cells[legalNeighborsIndexs[i]]=callback(this.cells[legalNeighborsIndexs[i]])
@@ -46,7 +28,7 @@ class GridManager{
     }
 
     applyToAllLegalNeighborsAndReturn(index, callback){
-        let legalNeighborsIndexs=this.giveAllLegalNeighborIndex(index)
+        let legalNeighborsIndexs=this.getAllLegalNeighborIndex(index)
         const response=[]
         for (let i=0;i<legalNeighborsIndexs.length;i++){
                response.push(callback(this.cells[legalNeighborsIndexs[i]]))
@@ -54,7 +36,7 @@ class GridManager{
         return response
     }
 
-    giveAllLegalNeighborIndex(index){
+    getAllLegalNeighborIndex(index){
         const neighbors=this.neighbor(this.toXY(index)[0], this.toXY(index)[1]);
         
         let legalNeighbors=[]
@@ -65,6 +47,22 @@ class GridManager{
         }
         return legalNeighbors
     }
+
+    getCellsToReveal(index){
+
+        let cellsToReveal=[]
+
+        if (this.cells[index].type==='cellEmpty'){
+            cellsToReveal=[...getAllLinkedEmptyCells(this, index)]
+        }
+        else{
+            cellsToReveal.push(index)
+        }
+        
+        return  cellsToReveal
+    }
+    
+     
 
     areCoordLegal (coordXY){
         let x=coordXY[0]
@@ -113,9 +111,7 @@ class GridManager{
 
     changeCellState(index, state){
         this.cells[index].state=state
-    }
-
-    
+    }   
 }
 
 
