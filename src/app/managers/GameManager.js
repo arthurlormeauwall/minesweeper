@@ -1,6 +1,6 @@
 import React from 'react';
 
-import generateNewGrid from './generateNewGrid'
+import gridFactory from './gridFactory'
 import Levels from '../data/Levels'
 import AppView from '../components/AppView';
 import { designRessource } from '../data/designRessource';
@@ -11,7 +11,7 @@ export default class GameManager extends React.Component{
   constructor(props){
     super(props)
 
-    this.gridManager = generateNewGrid(Levels[0])
+    this.gridManager = gridFactory(Levels[0])
     this.gameState={state:'beforeGame'}
     this.state={grid : this.gridManager.getData(), gameState: this.gameState}
 
@@ -21,13 +21,13 @@ export default class GameManager extends React.Component{
     this.chooseLevel=this.chooseLevel.bind(this)
 
   }
+
   chooseLevel(content){
     this.newGrid(Levels[content])
   }
 
-
   newGrid(level){
-    this.gridManager = generateNewGrid(level)
+    this.gridManager = gridFactory(level)
     this.gameState={state: 'beforeGame'}
     this.setState({grid:this.gridManager.getData(), gameState:this.gameState})
   }
@@ -37,14 +37,14 @@ onNewRevealedCell(index, type){
   let cellIndexToReveal=[]
   cellIndexToReveal= this.gridManager.getCellsToReveal(index)
 
-    for (let i=0;i<cellIndexToReveal.length;i++){
-      if(this.gridManager.cells[cellIndexToReveal[i]].state==='hiddenCell'){
-        this.setCellState(cellIndexToReveal[i], 'revealedCell')
-      } 
-    }
-    if(type==='bomb'){
-      this.aBombHasBeenfound(index)
-    }
+  for (let i=0;i<cellIndexToReveal.length;i++){
+    if(this.gridManager.cells[cellIndexToReveal[i]].state==='hiddenCell'){
+      this.setCellState(cellIndexToReveal[i], 'revealedCell')
+    } 
+  }
+  if(type==='bomb'){
+    this.aBombHasBeenfound(index)
+  }
  
 }
 
@@ -84,23 +84,13 @@ flagCell(index){
   }
 
   youWin(){
-
     this.gameState.score.result='You win'
     this.setState(({grid : this.gridManager.getData(), gameState : this.gameState}))
   }
 
   youLoose(){
-  
-   
     this.gameState.score.result='You loose'
     this.setState(({grid : this.gridManager.getData(), gameState : this.gameState}))
-  }
-
-  
-  componentDidUpdate(){
-    if (this.gameState=='gameOver'){
-      console.log(this.score) 
-    }
   }
 
   gameOver(index){
@@ -138,11 +128,11 @@ flagCell(index){
 
   render(){
       return (<AppView
+                    onRevealedCell={this.onNewRevealedCell} 
+                    flagCell={this.flagCell}
                     chooseLevel={this.chooseLevel}
                     cells={this.state.grid.cells}
                     size={this.state.grid.size}
-                    onRevealedCell={this.onNewRevealedCell} 
-                    flagCell={this.flagCell}
                     gameState={this.state.gameState}  
                   />
     )

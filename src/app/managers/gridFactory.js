@@ -9,7 +9,7 @@ const interCellData = (index,type)=>{
     })
 }
 
-function generateNewGrid (level) {
+function gridFactory (level) {
 
     let interCells=[]
     let cells=[]
@@ -96,4 +96,4 @@ function createTypeFromInterType(interCellType, interCellCount){
 }
 
 
-export default generateNewGrid
+export default gridFactory
