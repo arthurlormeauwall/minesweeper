@@ -3,7 +3,6 @@ import GridView from '../components/GridView'
 import LevelChoiceView from '../components/LevelChoiceView';
 import ResultView from './ResultView';
 
-import '../../scss/App.scss';
 import '../../scss/custom.scss'
 
 export default class AppView extends React.Component{
