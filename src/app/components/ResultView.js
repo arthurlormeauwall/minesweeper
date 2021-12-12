@@ -18,14 +18,23 @@ export default class ResultView extends React.Component {
             this.content=<h3>Find them all !!! </h3>
           }
           else{
-            this.content= <div className="result">
-            <h3> {this.gameState.score.result} !!! </h3>
-            <ul> 
-                <li>You found {this.gameState.score.bombFound} bomb(s) </li>
-                <li>There are {this.gameState.score.remainingBomb} bomb(s) unfound</li>
-                <li>There are {this.gameState.score.wrongFlag} wrong flag(s) </li>
-            </ul>
-        </div>
+            if (this.gameState.score.result=='You win'){
+              this.content= <div className="result">
+              <h3> {this.gameState.score.result} !!! </h3>
+              You found all the {this.gameState.score.bombFound} bomb(s) in {this.gameState.score.tick} seconds ! Congratulation :)
+          </div>
+            }
+            else{
+              this.content= <div className="result">
+              <h3> {this.gameState.score.result} !!! </h3>
+              <ul> 
+                  <li>You found {this.gameState.score.bombFound} bomb(s) </li>
+                  <li>There are {this.gameState.score.remainingBomb} bomb(s) unfound</li>
+                  <li>There are {this.gameState.score.wrongFlag} wrong flag(s) </li>
+              </ul>
+          </div>
+            }
+          
           }
     
             return(

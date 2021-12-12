@@ -13,8 +13,9 @@ export default class GameManager extends React.Component{
 
     this.gridManager = gridFactory(Levels[0])
     this.gameState={state:'beforeGame'}
-    this.state={grid : this.gridManager.getData(), gameState: this.gameState}
-
+    this.tick=0
+    this.state={grid : this.gridManager.getData(), gameState: this.gameState, tick:this.tick}
+  
     this.newGrid=this.newGrid.bind(this)
     this.onNewRevealedCell=this.onNewRevealedCell.bind(this)
     this.flagCell=this.flagCell.bind(this)
@@ -26,49 +27,64 @@ export default class GameManager extends React.Component{
     this.newGrid(Levels[content])
   }
 
+
   newGrid(level){
     this.gridManager = gridFactory(level)
     this.gameState={state: 'beforeGame'}
-    this.setState({grid:this.gridManager.getData(), gameState:this.gameState})
+    this.killTimer()
+    this.tick=0
+    this.setState({grid:this.gridManager.getData(), gameState:this.gameState, tick:this.tick})
   }
 
 
-onNewRevealedCell(index, type){
-  let cellIndexToReveal=[]
-  cellIndexToReveal= this.gridManager.getCellsToReveal(index)
-
-  for (let i=0;i<cellIndexToReveal.length;i++){
-    if(this.gridManager.cells[cellIndexToReveal[i]].state==='hiddenCell'){
-      this.setCellState(cellIndexToReveal[i], 'revealedCell')
-    } 
-  }
-  if(type==='bomb'){
-    this.aBombHasBeenfound(index)
-  }
- 
-}
-
-aBombHasBeenfound(index){
-  this.gameState.score= this.gameOver()
+  onNewRevealedCell(index, type){
+    let cellIndexToReveal=[]
+    cellIndexToReveal= this.gridManager.getCellsToReveal(index)
+    if (this.gameState.state=='beforeGame'){
+      this.gameState.state= 'isPlaying'
+      this.launchTimer()
+    }
+    for (let i=0;i<cellIndexToReveal.length;i++){
+      if(this.gridManager.cells[cellIndexToReveal[i]].state==='hiddenCell'){
+        this.setCellState(cellIndexToReveal[i], 'revealedCell')
+      } 
+    }
+    if(type==='bomb'){
+      this.aBombHasBeenfound(index)
+    }
   
-  this.gridManager.cells[index].content.gameOver=designRessource['bombExplode']
-  this.youLoose()
-}
+  }
 
-flagCell(index){
-    if (this.gridManager.cells[index].state==='flaggedCell'){
-      this.setCellState(index, 'hiddenCell')
-    }
-    else if (this.gridManager.cells[index].state==='hiddenCell'){
-      this.setCellState(index, 'flaggedCell')
-    }
-}
+  aBombHasBeenfound(index){
+    this.gameState.score= this.gameOver()
+    
+    this.gridManager.cells[index].content.gameOver=designRessource['bombExplode']
+    this.youLoose()
+  }
 
+  flagCell(index){
+      if (this.gridManager.cells[index].state==='flaggedCell'){
+        this.setCellState(index, 'hiddenCell')
+      }
+      else if (this.gridManager.cells[index].state==='hiddenCell'){
+        this.setCellState(index, 'flaggedCell')
+      }
+  }
+
+  launchTimer(){
+    this.timer=setInterval(()=>{
+      this.tick++
+      this.setState({grid:this.gridManager.getData(), gameState:this.gameState, tick:this.tick})
+    }, 1000)
+  }
+
+  killTimer(){
+    clearInterval(this.timer)
+  }
 
   setCellState(index,state){
     this.gridManager.cells[index].state=state
-    this.gameState.state= 'isPlaying'
-    
+   
     
     this.setState({grid:this.gridManager.getData(), gameState:this.gameState})
 
@@ -84,11 +100,13 @@ flagCell(index){
   }
 
   youWin(){
+    this.killTimer()
     this.gameState.score.result='You win'
     this.setState(({grid : this.gridManager.getData(), gameState : this.gameState}))
   }
 
   youLoose(){
+    this.killTimer()
     this.gameState.score.result='You loose'
     this.setState(({grid : this.gridManager.getData(), gameState : this.gameState}))
   }
@@ -122,7 +140,8 @@ flagCell(index){
      return ({
        wrongFlag:wrongFlag,
        bombFound:bombFound,
-       remainingBomb:remainingBomb
+       remainingBomb:remainingBomb,
+       tick:this.tick
      })
   }
 
@@ -131,9 +150,11 @@ flagCell(index){
                     onRevealedCell={this.onNewRevealedCell} 
                     flagCell={this.flagCell}
                     chooseLevel={this.chooseLevel}
+                    tick={this.state.tick}
                     cells={this.state.grid.cells}
                     size={this.state.grid.size}
                     gameState={this.state.gameState}  
+                    
                   />
     )
   }
