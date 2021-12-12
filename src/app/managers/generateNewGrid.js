@@ -1,6 +1,13 @@
-import Grid from '../components/GridView';
-import { designRessource } from '../data/designRessource';
-import GridManager from './gridManager';
+import GridManager from './GridManager';
+import { cellData } from '../data/cellDataStructure';
+
+const interCellData = (index,type)=>{
+    return({
+        index:index,
+        type:type,
+        count : (type==='bomb')? NaN:0
+    })
+}
 
 function generateNewGrid (level) {
 
@@ -9,14 +16,19 @@ function generateNewGrid (level) {
 
     interCells = putAndCountBomb(level)
 
-    
     cells= createCellsFromInterCells(interCells)
     let newGrid= new GridManager(level, cells)
-    
+
     return newGrid
 
 }
 
+const randomNumber=(index)=>{
+   
+    // return Math.random()*101
+    return (Math.random()*100)
+  
+}
 function putAndCountBomb(level){
     let interCells=[]
     let index=0
@@ -25,7 +37,7 @@ function putAndCountBomb(level){
 
     for (let y=0;y<size;y++){
         for (let x=0;x<size;x++){   
-            (Math.random()*101< difficulty) ? interCells.push(interCellData(index,'bomb')): interCells.push(interCellData(index,'counter'))
+            (randomNumber(index)< (difficulty)) ? interCells.push(interCellData(index,'bomb')): interCells.push(interCellData(index,'counter'))
             index++
         }
     }
@@ -69,25 +81,9 @@ function createCellsFromInterCells(interCells){
     return cells
 }
 
-const cellData=(index, type)=>{
-    return({ 
-    id : index,
-    type: type,
-    content : { hiddenCell : designRessource['cellHidden'],
-                flaggedCell: designRessource['cellFlag'],
-                revealedCell : designRessource[type]
-              },
-    state : 'hiddenCell'
-    })      
-}
 
-const interCellData = (index,type)=>{
-    return({
-        index:index,
-        type:type,
-        count : (type==='bomb')? NaN:0
-    })
-}
+
+
 
 function createTypeFromInterType(interCellType, interCellCount){
     if (interCellType=='bomb'){

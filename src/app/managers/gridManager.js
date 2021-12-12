@@ -1,4 +1,5 @@
 import getAllLinkedEmptyCells from "./getAllLinkedEmptyCells"
+import { designRessource } from '../data/designRessource';
 
 class GridManager{
     constructor(level, cells){
@@ -11,6 +12,16 @@ class GridManager{
             size: this.level.size,
             cells:this.cells
         })
+    }
+
+    numberOfHiddenCell(){
+        var count=0
+        this.cells.forEach(cell => {
+            if (cell.state=='hiddenCell'){
+                count++
+            }
+        });
+        return count
     }
 
     applyToAllCells(callback){
@@ -62,8 +73,6 @@ class GridManager{
         return  cellsToReveal
     }
     
-     
-
     areCoordLegal (coordXY){
         let x=coordXY[0]
         let y=coordXY[1]
@@ -80,8 +89,7 @@ class GridManager{
         [x+1,y],
         [x+1,y+1],
         [x+1,y-1],
-    
-            
+     
         [x,y-1],          
         [x,y+1], 
     
@@ -102,16 +110,7 @@ class GridManager{
     
     toXY(index){
         return [Math.floor(index/this.level.size), index%(this.level.size)]
-    }
-    
-
-    getCell(id){
-        return this.cells[id]
-    }
-
-    changeCellState(index, state){
-        this.cells[index].state=state
-    }   
+    }  
 }
 
 

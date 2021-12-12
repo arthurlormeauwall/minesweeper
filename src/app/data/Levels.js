@@ -1,17 +1,17 @@
 const levels = [
     {
         name:"Hard",
-        size:12,
-        difficulty :12
+        size:11,
+        difficulty : 3
     },
     {
         name:"Very hard",
-        size:22,
-        difficulty : 14
+        size:23,
+        difficulty : 12
     },
     {
         name:"impossible",
-        size:30,
+        size:29,
         difficulty : 16
     }
 ]

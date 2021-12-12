@@ -1,15 +1,14 @@
 import React from 'react';
 import CellView from "./CellView"
 
-
 const rowOfCells=(props)=>{
     const rowCount = props.rowCount
     const size = props.size
     const tableData = props.cells
     const onRevealedCell = props.onRevealedCell
+    const flagCell=props.flagCell
     
     const returnCallBack=(callBack)=>{
-      
         return callBack()
     }
 
@@ -26,6 +25,7 @@ const rowOfCells=(props)=>{
                        
                         <CellView  cellData= {tableData[cellCount+rowCount* size]}
                                    onRevealedCell={(onRevealedCell)}
+                                   flagCell={flagCell}
                           
                            /></td>
                     )
@@ -61,6 +61,7 @@ const Grid =(props)=>{
                         
                 
                 </table>
+  
     </div>)
 }
 

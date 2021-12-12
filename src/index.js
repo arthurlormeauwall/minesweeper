@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.css'
-import App from './app/managers/App.js';
+import GameManager from './app/managers/GameManager';
 
 
 
 ReactDOM.render(
-    <App/>,
+    <GameManager/>,
   document.getElementById('root')
 );
