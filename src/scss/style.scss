@@ -1,4 +1,4 @@
-$cellDim: 20px;
+$cellDim: 32px;
 
 @font-face {
   font-family: EightbitFont;
@@ -13,12 +13,21 @@ body {
 
 .LevelChoice > button {
   font-family: EightBitFont, sans-serif;
+  font-size: 1.8em;
 }
 
+.LevelChoice > button {
+  padding: 0.6%;
+}
 .resultDiv,
 .timerDiv {
   padding: 1%;
   color: rgba(248, 220, 126, 0.986);
+}
+
+.resultDiv,
+.timerDiv {
+  font-size: 2rem;
 }
 
 #gridTable {
