@@ -1,6 +1,6 @@
 import computeEmptyCellNetwork from "./computeEmptyCellNetwork"
 
-class GridManager{
+class GridController{
     constructor(level, cells){
         this.level=level
         this.cells=cells
@@ -104,7 +104,23 @@ class GridManager{
     
     toXY(index){
         return [Math.floor(index/this.level.size), index%(this.level.size)]
-    }  
+    } 
+    
+    setCells(cells){
+        this.cells=cells
+    }
+
+    setCell(index, cell){
+        this.cells[index]=cell
+    }
+
+    pushCell(cell){
+        this.cells.push(cell)
+    }
+
+    getCell(index){
+        return this.cells[index]
+    }
 
     getCellType(index){
         return this.cells[index].type
@@ -116,6 +132,6 @@ class GridManager{
 }
 
 
-export default GridManager
+export default GridController
 
 
