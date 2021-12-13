@@ -1,4 +1,4 @@
-import GridController from './gridController';
+import GridController from './GridController';
 import {cellData}  from '../entities/cellDataStructure';
 import {interCellData}  from '../entities/cellDataStructure';
 
@@ -7,31 +7,16 @@ function gridFactory (level) {
     let grid = new GridController(level, [])
     putAndCountBomb(grid)
 
-
     return grid
 }
-
-const randomNumber=(index)=>{
-   
-    return (Math.random()*100) 
-}
-
 
 
 function putAndCountBomb(grid){
     
-    let size=grid.level.size
-
     putBomb(grid)
-
     incrementCounterCells(grid)
-
     createCellsFromInterCells(grid)
-
-    return grid
 }
-
-
 
 function putBomb(grid){
     let difficulty=grid.level.difficulty
@@ -60,8 +45,6 @@ function putBomb(grid){
 }
 
 function incrementCounterCells(grid){
-    let size=grid.level.size
-
     for (const cell of grid.cells){
         if (cell.type==='bomb'){
             grid.applyToAllLegalNeighbors(cell.index, incrementConterCell);
@@ -93,6 +76,11 @@ function getRandomOffset(size, numberOfBomb){
     let offset=1/(size*1.8)
     return randomIntFromInterval(-offset*numberOfBomb,offset*numberOfBomb)
 }
+
+const randomNumber=(index)=>{
+    return (Math.random()*100) 
+}
+
 
 function computeNumberOfBomb(size, difficulty){
     let numberOfBomb=Math.floor((size*size)*difficulty/100)
@@ -135,7 +123,6 @@ function incrementConterCell(cell){
         return cell
     }
 }
-
 
 function createTypeFromInterType(interCellType, interCellCount){
     if (interCellType==='bomb'){

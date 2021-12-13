@@ -16,7 +16,7 @@ export default class LevelChoiceView extends React.Component {
             return(
                   <div className="LevelChoice">
                   {
-                        levels.map((level,i)=>{return(<button id={i} onClick={this.onLevelChosen}>{level.name} </button>)})
+                        levels.map((level,i)=>{return(<button id={i} onClick={this.onLevelChosen} key={i}>{level.name} </button>)})
                   }
                   </div>
            )

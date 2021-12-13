@@ -41,7 +41,7 @@ const Grid =(props)=>{
                     var rows=[]
                     for (let rowCount=0; rowCount <  props.size; rowCount++){
                     
-                        rows.push(<tbody><tr key={rowCount+1000}>
+                        rows.push(<tbody><tr key={rowCount}>
                                 {rowOfCells({...props, rowCount})}
                             </tr></tbody>)
                     }
