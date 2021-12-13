@@ -1,5 +1,4 @@
-import getAllLinkedEmptyCells from "./getAllLinkedEmptyCells"
-import { designRessource } from '../data/designRessource';
+import computeEmptyCellNetwork from "./computeEmptyCellNetwork"
 
 class GridManager{
     constructor(level, cells){
@@ -17,7 +16,7 @@ class GridManager{
     numberOfHiddenCell(){
         var count=0
         this.cells.forEach(cell => {
-            if (cell.state=='hiddenCell'){
+            if (cell.state==='hiddenCell'){
                 count++
             }
         });
@@ -31,19 +30,17 @@ class GridManager{
     }
 
     applyToAllLegalNeighbors(index, callback){
-        let legalNeighborsIndexs=this.getAllLegalNeighborIndex(index)
+        let legalNeighborsIndex=this.getAllLegalNeighborIndex(index)
         
-        for (let i=0;i<legalNeighborsIndexs.length;i++){
-                this.cells[legalNeighborsIndexs[i]]=callback(this.cells[legalNeighborsIndexs[i]])
-        }
+        for(const index of legalNeighborsIndex){ this.cells[index]=callback(this.cells[index])}
     }
 
     applyToAllLegalNeighborsAndReturn(index, callback){
-        let legalNeighborsIndexs=this.getAllLegalNeighborIndex(index)
+        let legalNeighborsIndex=this.getAllLegalNeighborIndex(index)
         const response=[]
-        for (let i=0;i<legalNeighborsIndexs.length;i++){
-               response.push(callback(this.cells[legalNeighborsIndexs[i]]))
-        }
+
+        for(const index of legalNeighborsIndex){ response.push(callback(this.cells[index]))}
+
         return response
     }
 
@@ -59,27 +56,24 @@ class GridManager{
         return legalNeighbors
     }
 
-    getCellsToReveal(index){
+    getCellsToReveal(newRevealedCellIndex){
 
         let cellsToReveal=[]
 
-        if (this.cells[index].type==='cellEmpty'){
-            cellsToReveal=[...getAllLinkedEmptyCells(this, index)]
+        if (this.getCellType(newRevealedCellIndex)==='cellEmpty'){
+            cellsToReveal=[...computeEmptyCellNetwork(this, newRevealedCellIndex)]
         }
         else{
-            cellsToReveal.push(index)
-        }
-        
+            cellsToReveal.push(newRevealedCellIndex)
+        }        
         return  cellsToReveal
     }
     
     areCoordLegal (coordXY){
         let x=coordXY[0]
         let y=coordXY[1]
-        let response;
-        (x<0 || x>=this.level.size || y<0 || y>=this.level.size) ? response= false : response=true
-      
-        return response
+  
+       return (x<0 || x>=this.level.size || y<0 || y>=this.level.size) ? false : true
     }
 
     // give 8 neighbor cells of the XYCoord Cell
@@ -111,6 +105,14 @@ class GridManager{
     toXY(index){
         return [Math.floor(index/this.level.size), index%(this.level.size)]
     }  
+
+    getCellType(index){
+        return this.cells[index].type
+    }
+
+    getCellState(index){
+        return this.cells[index].state
+    }
 }
 
 

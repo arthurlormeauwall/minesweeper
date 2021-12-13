@@ -1,4 +1,4 @@
-function getAllLinkedEmptyCells(grid, index){
+function computeEmptyCellNetwork(grid, index){
 
   let linkedEmptyCell=[]
   let cellsToReveal=[]
@@ -19,15 +19,16 @@ function getAllLinkedEmptyCells(grid, index){
 function getLinkedEmptyCells(grid, linkedEmptyCells, numberToSearch){
 
   let count=0
-  let indexReference=linkedEmptyCells.length-1
+  let lastLinkedEmptyCellIndex=linkedEmptyCells.length-1
 
   for (let i=0;i<numberToSearch;i++){   
     
-    let cellIndexToSearch=linkedEmptyCells[indexReference-i]
+    let cellIndexToSearch=linkedEmptyCells[lastLinkedEmptyCellIndex-i]
   
-    if (grid.cells[cellIndexToSearch].type==='cellEmpty'){
+    if (grid.getCellType(cellIndexToSearch)==='cellEmpty'){
     
       let neighbors=grid.getAllLegalNeighborIndex(cellIndexToSearch);
+
       let newIndexToAdd= getAllEmptyCellsDirectlyConnected(grid, neighbors, linkedEmptyCells)
       count= newIndexToAdd.length
       linkedEmptyCells.push(...newIndexToAdd)     
@@ -38,24 +39,16 @@ function getLinkedEmptyCells(grid, linkedEmptyCells, numberToSearch){
 }
     
 function getAllEmptyCellsDirectlyConnected(grid, neighbors, linkedEmptyCells){ 
-    let neighborsLength=neighbors.length
     let newIndexToAdd=[]
 
-    for (let j=0;j<neighborsLength;j++){ // for all neighbors
-        if (grid.cells[neighbors[j]].type==='cellEmpty'){ // is it empty ?
-          let newUnfound=true
-          let emptyCellIndexLength = linkedEmptyCells.length
-          for (let z=0;z<emptyCellIndexLength ;z++){ // check if index is not found already
-            if (linkedEmptyCells[z]===neighbors[j]){
-              newUnfound=false
-            }
-          }
-          if (newUnfound){ // if index is new and not already in the array, put it in the array
-            newIndexToAdd.push(neighbors[j])
-          }
+    for (const neighbor of neighbors){
+      if (grid.getCellType(neighbor)==='cellEmpty'){ 
+        if (linkedEmptyCells.includes(neighbor)===false){
+          newIndexToAdd.push(neighbor)
         }
       }
+    }
       return newIndexToAdd
 }
 
-export default getAllLinkedEmptyCells
+export default computeEmptyCellNetwork

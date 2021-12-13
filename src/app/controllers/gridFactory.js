@@ -1,26 +1,16 @@
-import GridManager from './gridManager';
-import { cellData } from '../data/cellDataStructure';
+import GridManager from './gridController';
+import {cellData}  from '../entities/cellDataStructure';
+import {interCellData}  from '../entities/cellDataStructure';
 
-const interCellData = (index,type)=>{
-    return({
-        index:index,
-        type:type,
-        count : (type==='bomb')? NaN:0
-    })
-}
 
 function gridFactory (level) {
 
-    let interCells=[]
     let cells=[]
-
-    interCells = putAndCountBomb(level)
-
-    cells= createCellsFromInterCells(interCells)
+    cells = createGridAndPutAndCountBomb(level)
+    cells= createCellsFromInterCells(cells)
     let newGrid= new GridManager(level, cells)
 
     return newGrid
-
 }
 
 const randomNumber=(index)=>{
@@ -30,25 +20,22 @@ const randomNumber=(index)=>{
 
 
 
-function putAndCountBomb(level){
-    let interCells=[]
+function createGridAndPutAndCountBomb(level){
+    let cells=[]
     
     let size=level.size
     let difficulty=level.difficulty
   
-
-    putBomb(difficulty, interCells, size)
-   
-
-    let grid= new GridManager(level, interCells)
+    putBomb(difficulty, cells, size)
+    let grid= new GridManager(level, cells)
 
     for (let i=0;i<size*size;i++){
-      if (interCells[i].type=='bomb'){
+      if (cells[i].type==='bomb'){
         grid.applyToAllLegalNeighbors(i, incrementConterCell);
       } 
     }
 
-    return interCells
+    return cells
 }
 
 function randomIntFromInterval(min, max) {
@@ -60,14 +47,14 @@ function getRandomOffset(size, numberOfBomb){
     return randomIntFromInterval(-offset*numberOfBomb,offset*numberOfBomb)
 }
 
-function getNumberOfBomb(size, difficulty){
+function computeNumberOfBomb(size, difficulty){
     let numberOfBomb=Math.floor((size*size)*difficulty/100)
     numberOfBomb=numberOfBomb+getRandomOffset(size, numberOfBomb)
     return numberOfBomb
 }
 
-function putBomb(difficulty, interCells, size){
-    let numberOfBomb=getNumberOfBomb(size, difficulty)
+function putBomb(difficulty, cells, size){
+    let numberOfBomb=computeNumberOfBomb(size, difficulty)
     let index=0
     let bombIndex=[]
     let counterIndex=[]
@@ -75,34 +62,37 @@ function putBomb(difficulty, interCells, size){
     for (let y=0;y<size;y++){
         for (let x=0;x<size;x++){   
             if (randomNumber(index)< (difficulty)) {
-                interCells.push(interCellData(index,'bomb')); 
+                cells.push(interCellData(index,'bomb')); 
                 bombIndex.push(index)
             }
             else{ 
-                interCells.push(interCellData(index,'counter'))
+                cells.push(interCellData(index,'counter'))
                 counterIndex.push(index)
             }
             index++
         }
     }
+
+    adjustNumberOfBomb(numberOfBomb, bombIndex, counterIndex, cells)
+}
+
+function adjustNumberOfBomb(numberOfBomb, bombIndex, counterIndex, cells){
     if(bombIndex.length<numberOfBomb){
-        while(bombIndex.length!=numberOfBomb){
-            let ranIndex=Math.floor(Math.random() * counterIndex.length)
-            let randomCounterIndex=counterIndex[ranIndex]
+        while(bombIndex.length!==numberOfBomb){
+            let randomIndex=Math.floor(Math.random() * counterIndex.length)
+            let randomCounterIndex=counterIndex[randomIndex]
 
             bombIndex.push(randomCounterIndex)
-
-            interCells[randomCounterIndex]=interCellData(randomCounterIndex, 'bomb')
-
-            counterIndex.splice(ranIndex,1)
+            cells[randomCounterIndex]=interCellData(randomCounterIndex, 'bomb')
+            counterIndex.splice(randomIndex,1)
         }
     }
     else if(bombIndex.length>numberOfBomb){
-        while(bombIndex.length!=numberOfBomb){
+        while(bombIndex.length!==numberOfBomb){
             let ranIndex=Math.floor(Math.random() * counterIndex.length)
             let randomBombIndex=bombIndex[ranIndex]
             counterIndex.push(randomBombIndex)
-            interCells[randomBombIndex]=interCellData(randomBombIndex, 'counter')
+            cells[randomBombIndex]=interCellData(randomBombIndex, 'counter')
 
             bombIndex.splice(ranIndex,1)
         }
@@ -110,7 +100,7 @@ function putBomb(difficulty, interCells, size){
 }
 
 function incrementConterCell(cell){
-    if (cell.type=='counter'){
+    if (cell.type==='counter'){
         let count=cell.count
         count+=1
         count = min(count,8)
@@ -129,7 +119,6 @@ function min (a,b){
 function createCellsFromInterCells(interCells){
 
     let cells=[]
-
     for (let i=0;i<interCells.length;i++){
         let type=createTypeFromInterType(interCells[i].type, interCells[i].count)
         cells.push(cellData(interCells[i].index,type))
@@ -139,18 +128,14 @@ function createCellsFromInterCells(interCells){
 }
 
 
-
-
-
 function createTypeFromInterType(interCellType, interCellCount){
-    if (interCellType=='bomb'){
+    if (interCellType==='bomb'){
         return 'bomb'}
-    else if (interCellCount==0){
+    else if (interCellCount===0){
         return 'cellEmpty'}
     else {
         return 'cell'+interCellCount
     }
 }
-
 
 export default gridFactory

@@ -24,7 +24,7 @@ import cell7GO    from '../../ressources/images/cell7GO.jpg'
 import cell8GO    from '../../ressources/images/cell8GO.jpg'
 import cellEmptyGO from "../../ressources/images/cellEmptyGO.jpg"
 
-export const designRessource = {
+const display = {
   "cellHidden" : cellHidden,
   'cell1' : cell1,
   'cell2' :cell2,
@@ -51,3 +51,5 @@ export const designRessource = {
   'cell8GO' :cell8GO,
   "cellEmptyGO" : cellEmptyGO,
 }
+
+export default display

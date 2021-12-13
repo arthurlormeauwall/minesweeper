@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.css'
-import GameManager from './app/managers/GameManager';
+import GameController from './app/controllers/GameController';
 
 
 
 ReactDOM.render(
-    <GameManager/>,
+    <GameController/>,
   document.getElementById('root')
 );

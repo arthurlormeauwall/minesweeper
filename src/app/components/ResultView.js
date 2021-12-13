@@ -1,44 +1,35 @@
 import React from 'react';
 
+const ResultView=(props)=>{
+  let gameState=props.gameState
+  let content={}
 
-export default class ResultView extends React.Component {
-
-      constructor(props){
-            super(props)
-      }
-
-      render(){  
-          this.gameState=this.props.gameState
-
-
-          if (this.gameState.state=='beforeGame'){
-            this.content=<h3>Ready?</h3>
-          }
-          else if (this.gameState.state=='isPlaying'){
-            this.content=<h3>Find them all !!! </h3>
-          }
-          else{
-            if (this.gameState.score.result=='You win'){
-              this.content= <div className="result">
-              <h3> {this.gameState.score.result} !!! </h3>
-              You found all the {this.gameState.score.bombFound} bomb(s) in {this.gameState.score.tick} seconds ! Congratulation :)
-          </div>
-            }
-            else{
-              this.content= <div className="result">
-              <h3> {this.gameState.score.result} !!! </h3>
-              <ul> 
-                  <li>You found {this.gameState.score.bombFound} bomb(s) </li>
-                  <li>There are {this.gameState.score.remainingBomb} bomb(s) unfound</li>
-                  <li>There are {this.gameState.score.wrongFlag} wrong flag(s) </li>
-              </ul>
-          </div>
-            }
-          
-          }
-    
-            return(
-               this.content
-           )
-        }
+  if (gameState.state==='beforeGame'){
+    content=<h3>Ready?</h3>
+  }
+  else if (gameState.state==='isPlaying'){
+    content=<h3>Find them all !!! </h3>
+  }
+  else{
+    if (gameState.score.result==='You win'){
+      content= <div className="result">
+        <h3> {gameState.score.result} !!! </h3>
+        You found all the {gameState.score.bombFound} bomb(s) in {gameState.score.tick} seconds ! Congratulation :)
+      </div>
+    }
+    else{
+      content= <div className="result">
+        <h3> {gameState.score.result} !!! </h3>
+          <ul> 
+              <li>You found {gameState.score.bombFound} bomb(s) </li>
+              <li>There are {gameState.score.remainingBomb} bomb(s) unfound</li>
+              <li>There are {gameState.score.wrongFlag} wrong flag(s) </li>
+          </ul>
+      </div>
+    }   
+  }
+  return(
+    content
+  )
 }
+export default ResultView
