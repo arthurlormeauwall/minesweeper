@@ -5,31 +5,34 @@ const ResultView=(props)=>{
   let content={}
 
   if (gameState.state==='beforeGame'){
-    content=<h3>Ready?</h3>
+    content= <h3>Ready?</h3>
   }
   else if (gameState.state==='isPlaying'){
     content=<h3>Find them all !!! </h3>
   }
   else{
     if (gameState.score.result==='You win'){
-      content= <div className="result">
+      content= 
+        <React.Fragment>
         <h3> {gameState.score.result} !!! </h3>
         You found all the {gameState.score.bombFound} bomb(s) in {gameState.score.tick} seconds ! Congratulation :)
-      </div>
+        </React.Fragment>
     }
     else{
-      content= <div className="result">
-        <h3> {gameState.score.result} !!! </h3>
-          <ul> 
-              <li>You found {gameState.score.bombFound} bomb(s) </li>
-              <li>There are {gameState.score.remainingBomb} bomb(s) unfound</li>
-              <li>There are {gameState.score.wrongFlag} wrong flag(s) </li>
-          </ul>
-      </div>
+      content= 
+      <React.Fragment>
+      <h3> {gameState.score.result} !!! </h3>
+           
+              <p>You found {gameState.score.bombFound} bomb(s)</p> 
+              <p>There are {gameState.score.remainingBomb} bomb(s) unfound</p> 
+              <p>There are {gameState.score.wrongFlag} wrong flag(s) </p> 
+         
+      </React.Fragment>
     }   
   }
   return(
-    content
+    <div className="resultDiv">{content}</div>
+    
   )
 }
 export default ResultView

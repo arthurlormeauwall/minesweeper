@@ -1,0 +1,45 @@
+$cellDim: 20px;
+
+@font-face {
+  font-family: EightbitFont;
+  src: url(../ressources/font/PressStart2P-vaV7.ttf);
+}
+
+body {
+  font-family: EightBitFont, sans-serif;
+  text-align: center;
+  background-color: rgb(66, 22, 5);
+}
+
+.LevelChoice > button {
+  font-family: EightBitFont, sans-serif;
+}
+
+.resultDiv,
+.timerDiv {
+  padding: 1%;
+  color: rgba(248, 220, 126, 0.986);
+}
+
+#gridTable {
+  margin-right: auto;
+  margin-left: auto;
+  align-content: center;
+  text-align: center;
+}
+
+.cellImg {
+  height: $cellDim;
+  width: $cellDim;
+  padding: 0%;
+}
+.cellDiv {
+  margin: 0%;
+  padding: 0%;
+}
+
+td,
+tr {
+  padding: 0%;
+  margin: 0%;
+}

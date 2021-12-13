@@ -35,8 +35,8 @@ const rowOfCells=(props)=>{
 
 const Grid =(props)=>{   
     return(
-        <div className="Grid">
-            <table>
+        <div className='gridDiv'>
+            <table id='gridTable' cellSpacing="0">
                 {returnCallBack(()=> {
                     var rows=[]
                     for (let rowCount=0; rowCount <  props.size; rowCount++){

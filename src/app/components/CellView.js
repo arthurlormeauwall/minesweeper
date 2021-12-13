@@ -34,7 +34,7 @@ export default class CellView extends React.Component {
             
             return(
             <div className="cellDiv" onMouseDown={this.mouseDownHandler} onContextMenu={(e)=> e.preventDefault()}> 
-                <img className="cell" 
+                <img className="cellImg" 
                      src={this.imgContent}
                      alt={"cell" + this.type} />
             </div>)

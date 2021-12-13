@@ -2,8 +2,8 @@ import React from 'react';
 
 const TimerView = (props)=>{
     let tick=props.tick
-    return (<div id='TimerDiv'>
-      {tick}
+    return (<div className='timerDiv'>
+      TIME : {tick}
       </div>
     )
   }

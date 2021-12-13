@@ -4,7 +4,7 @@ import LevelChoiceView from './LevelChoiceView';
 import ResultView from './ResultView';
 import TimerViews from './TimerView';
 
-import '../../scss/custom.scss'
+import '../../scss/style.scss'
 
 const AppView=(props)=>{
   let chooseLevel=props.chooseLevel
