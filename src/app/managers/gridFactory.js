@@ -1,4 +1,4 @@
-import GridManager from './GridManager';
+import GridManager from './gridManager';
 import { cellData } from '../data/cellDataStructure';
 
 const interCellData = (index,type)=>{
