@@ -1,4 +1,4 @@
-$cellDim: 32px;
+$cellDim: 36px;
 
 @font-face {
   font-family: EightbitFont;
@@ -13,16 +13,21 @@ body {
 
 .LevelChoice > button {
   font-family: EightBitFont, sans-serif;
-  font-size: 1.8em;
+  font-size: 1.5em;
 }
 
 .LevelChoice > button {
   padding: 0.6%;
 }
 .resultDiv,
-.timerDiv {
+.timerDiv,
+.contact {
   padding: 1%;
   color: rgba(248, 220, 126, 0.986);
+}
+
+.contact a {
+  color: rgba(246, 198, 152, 0.986);
 }
 
 .resultDiv,

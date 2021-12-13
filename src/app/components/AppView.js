@@ -3,6 +3,7 @@ import GridView from './GridView'
 import LevelChoiceView from './LevelChoiceView';
 import ResultView from './ResultView';
 import TimerViews from './TimerView';
+import Contact from './Contact'
 
 import '../../scss/style.scss'
 
@@ -24,6 +25,7 @@ const AppView=(props)=>{
                         flagCell={flagCell}
               />
               <ResultView gameState={gameState}/>
+              <Contact/>
     </div>
   )
 }
