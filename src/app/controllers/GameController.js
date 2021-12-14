@@ -41,22 +41,25 @@ export default class GameManager extends React.Component{
   }
 
   onNewRevealedCell(revealedCellIndex, type){
-    let cellIndexToReveal=this.gridManager.getCellsToReveal(revealedCellIndex)
+   
+      let cellIndexToReveal=this.gridManager.getCellsToReveal(revealedCellIndex)
 
-    if (this.gameState.state==='beforeGame'){
-      this.startGame()
-    }
-
-    if (this.getCellState(revealedCellIndex)!=='flaggedCell'){
-      cellIndexToReveal.forEach(index=>{
-        if(this.getCellState(index)==='hiddenCell'){
-          this.setStateCell(index, 'revealedCell')       
+      if (this.gameState.state==='beforeGame'){
+        this.startGame()
+      }
+      
+      if (this.gameState.state!=='gameOver'){
+      if (this.getCellState(revealedCellIndex)!=='flaggedCell'){
+        cellIndexToReveal.forEach(index=>{
+          if(this.getCellState(index)==='hiddenCell'){
+            this.setStateCell(index, 'revealedCell')       
+          } 
+        })
+        if(type==='bomb'){
+          this.bombHasBeenfound(revealedCellIndex)
         } 
-      })
-      if(type==='bomb'){
-        this.bombHasBeenfound(revealedCellIndex)
       } 
-    }  
+    }
   }
 
   bombHasBeenfound(index){

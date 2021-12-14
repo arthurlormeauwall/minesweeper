@@ -1,4 +1,4 @@
-import GridController from './GridController';
+import GridController from './gridController';
 import {cellData}  from '../entities/cellDataStructure';
 import {interCellData}  from '../entities/cellDataStructure';
 
