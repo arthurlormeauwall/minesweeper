@@ -24,9 +24,11 @@ class GridController{
     }
 
     applyToAllCells(callback){
-        for (let i=0;i<this.size*this.size;i++){
-                this.cells[i]=callback(this.cells[i])
+        let newCells=[]  
+        for (let cell of this.cells){   
+            newCells.push(callback(cell))
         }
+        this.cells=[...newCells]
     }
 
     applyToAllLegalNeighbors(index, callback){
@@ -56,8 +58,17 @@ class GridController{
         return legalNeighbors
     }
 
-    getCellsToReveal(newRevealedCellIndex){
+    revealCellsOnNewRevealedCell(newRevealedCellIndex){
+        if (this.getCellState(newRevealedCellIndex)!=='flaggedCell'){
+            this.getCellsToReveal(newRevealedCellIndex).forEach(index=>{
+              if(this.getCellState(index)==='hiddenCell'){
+                this.setCellState(index, 'revealedCell')
+              } 
+            })  
+          } 
+    }
 
+    getCellsToReveal(newRevealedCellIndex){
         let cellsToReveal=[]
 
         if (this.getCellType(newRevealedCellIndex)==='cellEmpty'){
@@ -128,6 +139,10 @@ class GridController{
 
     getCellState(index){
         return this.cells[index].state
+    }
+
+    setCellState(index, state){
+        this.cells[index].state=state
     }
 }
 
