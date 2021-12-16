@@ -26,7 +26,7 @@ export default class GameManager extends React.Component{
   chooseLevel(content){
     this.newGame(Levels[content])
   }
-
+  
   newGame(level){
     this.gridController = gridFactory(level)
     this.gameState={state: 'beforeGame'}
@@ -40,27 +40,28 @@ export default class GameManager extends React.Component{
     this.launchTimer()
   }
 
+  onNewRevealedCell(revealedCellIndex, type){
+
+    this.checkIfFirstMove()
+
+    if (this.gameState.state!=='gameOver'){
+      if (this.getCellState(revealedCellIndex)!=='flaggedCell'){
+        if(type==='bomb'){
+          this.bombHasBeenfound(revealedCellIndex)
+        }
+        else{
+          this.gridController.revealCellsOnNewRevealedCell(revealedCellIndex)
+          this.setStateFromGridData()
+          this.checkIfThisIsEndGame()
+        } 
+      }
+    } 
+  }
+  
   checkIfFirstMove(){
     if (this.gameState.state==='beforeGame'){
       this.startGame()
     }
-  }
-
-  onNewRevealedCell(revealedCellIndex, type){
-
-      this.checkIfFirstMove()
-
-      if (this.gameState.state!=='gameOver'){
-        if (this.getCellState(revealedCellIndex)!=='flaggedCell'){
-          if(type==='bomb'){
-            this.bombHasBeenfound(revealedCellIndex)
-          }
-          else{
-            this.gridController.revealCellsOnNewRevealedCell(revealedCellIndex)
-            this.setStateFromGridData()
-          } 
-        }
-    } 
   }
 
   bombHasBeenfound(index){
@@ -78,6 +79,7 @@ export default class GameManager extends React.Component{
         this.gridController.setCellState(index, 'flaggedCell')
       }
       this.setStateFromGridData()
+      this.checkIfThisIsEndGame()
   }
 
   launchTimer(){
@@ -93,7 +95,6 @@ export default class GameManager extends React.Component{
 
   setStateFromGridData(){
     this.setState({grid:this.gridController.getData(), gameState:this.gameState})
-    this.checkIfThisIsEndGame()
   }
 
   checkIfThisIsEndGame(){
